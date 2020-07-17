@@ -9,3 +9,7 @@ RUN apk add --no-cache mysql-client
 COPY ./schema /flyway/sql
 COPY ./ddl /flyway/sql/ddl
 COPY ./scripts /flyway/sql/ddl
+
+RUN adduser -D -g notifier -u 1002 notifier && \
+    chown -R notifier:notifier /flyway
+USER notifier

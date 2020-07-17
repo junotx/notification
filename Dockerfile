@@ -23,5 +23,10 @@ FROM alpine:3.7
 RUN apk add -U tzdata && ls /usr/share/zoneinfo && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && apk del tzdata
 
 COPY --from=builder /openpitrix_bin/notification /usr/local/bin/
+
+RUN adduser -D -g notifier -u 1002 notifier && \
+    chown -R notifier:notifier /usr/local/bin/notification
+USER notifier
+
 EXPOSE 9201
 CMD ["/usr/local/bin/notification"]
